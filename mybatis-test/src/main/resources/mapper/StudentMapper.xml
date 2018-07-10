@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zt.mapper.StudentMapper">
 
+    <!-- useGeneratedKey使用自动增长主键值， keyProperty的值为id-->
     <insert id="save" parameterType="com.zt.entity.Student" useGeneratedKeys="true" keyProperty="id">
         insert into student (stu_name,email)
         values (#{stuName},#{email})
