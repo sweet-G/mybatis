@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -19,6 +21,8 @@ import java.util.List;
  */
 
 public class StudentTestCase {
+
+    Logger logger = LoggerFactory.getLogger(StudentTestCase.class);
 
     @Test
     public void testSave() throws IOException {
@@ -40,6 +44,7 @@ public class StudentTestCase {
 
         Assert.assertEquals(1,res);
 
+        logger.debug("student:{}",student.toString());
         //5.释放资源
         sqlSession.close();
     }
@@ -50,7 +55,7 @@ public class StudentTestCase {
         List<Student> studentList = sqlSession.selectList("com.zt.mapper.StudentMapper.findAll");
 
         for(Student student : studentList){
-            System.out.println(student);
+            logger.debug("student:{}",student.toString());
         }
 
         sqlSession.close();
@@ -61,8 +66,7 @@ public class StudentTestCase {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
 
         Student student = sqlSession.selectOne("com.zt.mapper.StudentMapper.findById",2);
-        System.out.println(student);
-
+        logger.debug("student:{}",student.toString());
         sqlSession.close();
     }
 
@@ -75,6 +79,8 @@ public class StudentTestCase {
         student.setEmail("alex@163.com");
 
         sqlSession.update("com.zt.mapper.StudentMapper.update",student);
+        logger.debug("student:{}",student.toString());
+
         sqlSession.close();
 
     }

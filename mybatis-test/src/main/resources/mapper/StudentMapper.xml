@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zt.mapper.StudentMapper">
 
-    <insert id="save" parameterType="com.zt.entity.Student">
+    <insert id="save" parameterType="com.zt.entity.Student" useGeneratedKeys="true" keyProperty="id">
         insert into student (stu_name,email)
         values (#{stuName},#{email})
     </insert>
@@ -13,9 +13,33 @@
         from student
     </select>
 
-    <select id="findById" resultType="com.zt.entity.Student">
+    <!-- 手动映射 -->
+    <resultMap id="studentMap" type="com.zt.entity.Student">
+        <id column="id" property="id"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="email" property="email"/>
+    </resultMap>
+    <select id="findById" resultMap="studentMap">
         select id, stu_name, email
         from student where id=#{id};
+    </select>
+
+    <!-- 自动映射-->
+   <!-- <select id="findById" resultType="com.zt.entity.Student">
+        select id, stu_name, email
+        from student where id=#{id};
+    </select>-->
+
+    <select id="findByPage" resultType="com.zt.entity.Student">
+        select id, stu_name, email
+        from student
+        limit #{start},#{pageSize}
+    </select>
+    
+    <select id="findByMap" parameterType="map" resultType="com.zt.entity.Student">
+        select id, stu_name, email
+        from student
+        limit #{start},#{pageSize}
     </select>
 
     <update id="update" parameterType="com.zt.entity.Student">
