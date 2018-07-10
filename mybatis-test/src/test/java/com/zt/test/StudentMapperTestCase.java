@@ -1,6 +1,7 @@
 package com.zt.test;
 
 import com.zt.entity.Student;
+import com.zt.entity.Tag;
 import com.zt.mapper.StudentMapper;
 import com.zt.util.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +112,34 @@ public class StudentMapperTestCase {
     public void testDel(){
         studentMapper.del(2);
         sqlSession.commit();
+    }
+
+    @Test
+    public void testFindSchoolById(){
+        Student student = studentMapper.findSchoolById(4);
+        logger.debug("student:{}",student.toString());
+    }
+
+    @Test
+    public void testFindTagById(){
+        Student student = studentMapper.findTagById(5);
+        logger.debug("student:{}",student);
+
+    }
+
+    @Test
+    public void testAddBacth(){
+        Tag tag = new Tag();
+        tag.setTagName("诚实");
+
+        Tag tag1 = new Tag();
+        tag1.setTagName("摄影爱好者");
+
+        List<Tag> tagList = Arrays.asList(tag,tag1);
+        int count = studentMapper.addBatch(tagList);
+
+        sqlSession.commit();
+        logger.debug("size:{}",count);
     }
 
 }

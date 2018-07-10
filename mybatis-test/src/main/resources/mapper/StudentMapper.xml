@@ -3,6 +3,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zt.mapper.StudentMapper">
 
+    <resultMap id="baseMap" type="com.zt.entity.Student">
+        <id column="id" property="id"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <!-- 一对多-->
+    <resultMap id="tagMap" type="com.zt.entity.Student" extends="baseMap">
+        <collection property="tagList" ofType="com.zt.entity.Tag">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+    <select id="findTagById" resultMap="tagMap">
+        select student.id, stu_name, email, school_id, tag.id as tag_id, tag_name
+        from student
+        inner join student_tag on student_tag.student_id = student.id
+        inner join tag on tag.id = student_tag.tag_id
+        where
+        student.id = #{id}
+    </select>
+
+    <!-- 多对一/一对一 -->
+    <resultMap id="schoolMap" type="com.zt.entity.Student" extends="baseMap">
+        <association property="school" javaType="com.zt.entity.School">
+            <id column="id" property="id"/>
+            <result column="school_name" property="schoolName"/>
+        </association>
+    </resultMap>
+    <select id="findSchoolById" resultMap="schoolMap" parameterType="int">
+        select student.id, stu_name, email, school_id, school_name
+        from student
+        inner join school on student.school_id = school.id
+        where
+        student.id = #{id}
+    </select>
+
+    <!--批量插入 -->
+    <insert id="addBatch" parameterType="com.zt.entity.Tag">
+        insert into tag(tag_name) values
+        <foreach collection="tagList" separator="," item="tag">
+            (#{tag.tagName})
+        </foreach>
+
+    </insert>
+
     <!-- useGeneratedKey使用自动增长主键值， keyProperty的值为id-->
     <insert id="save" parameterType="com.zt.entity.Student" useGeneratedKeys="true" keyProperty="id">
         insert into student (stu_name,email)

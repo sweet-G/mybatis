@@ -21,6 +21,7 @@
 
     <mappers>
         <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/MovieMapper.xml"/>
     </mappers>
 
 </configuration>

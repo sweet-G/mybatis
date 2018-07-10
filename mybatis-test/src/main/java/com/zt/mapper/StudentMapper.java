@@ -1,6 +1,7 @@
 package com.zt.mapper;
 
 import com.zt.entity.Student;
+import com.zt.entity.Tag;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -60,4 +61,24 @@ public interface StudentMapper {
      */
     void del(Integer id);
 
+    /**
+     * 查询学校对应的学生，多对一/一对一
+     * @param id
+     * @return student
+     */
+    Student findSchoolById(Integer id);
+
+    /**
+     * 查询学生对应的标签，一对多
+     * @param id
+     * @return student
+     */
+    Student findTagById(Integer id);
+
+    /**
+     * 批量插入
+     * @param tagList
+     * @return count
+     */
+    int addBatch(@Param("tagList")List<Tag> tagList);
 }
