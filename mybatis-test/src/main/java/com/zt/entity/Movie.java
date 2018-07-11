@@ -8,7 +8,7 @@ package com.zt.entity;
 public class Movie {
     private Integer id;
     private String title;
-    private String direstory;
+    private String directory;
     private String area;
     private String year;
 
@@ -28,12 +28,12 @@ public class Movie {
         this.title = title;
     }
 
-    public String getDirestory() {
-        return direstory;
+    public String getDirectory() {
+        return directory;
     }
 
-    public void setDirestory(String direstory) {
-        this.direstory = direstory;
+    public void setDirectory(String directory) {
+        this.directory = directory;
     }
 
     public String getArea() {
@@ -57,7 +57,7 @@ public class Movie {
         return "Movie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", direstory='" + direstory + '\'' +
+                ", directory='" + directory + '\'' +
                 ", area='" + area + '\'' +
                 ", year='" + year + '\'' +
                 '}';

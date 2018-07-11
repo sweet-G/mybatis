@@ -4,6 +4,7 @@ import com.zt.entity.Movie;
 import com.zt.mapper.MovieMapper;
 import com.zt.util.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class MovieMapperTestCase {
         movieMapper = sqlSession.getMapper(MovieMapper.class);
     }
 
-    @Test
+    @After
     public void after(){
         sqlSession.close();
     }
@@ -63,5 +64,7 @@ public class MovieMapperTestCase {
 
         logger.debug("size:{}", movieList.size());
     }
+
+
 
 }

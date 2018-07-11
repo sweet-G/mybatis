@@ -1,8 +1,7 @@
 package com.zt.mapper;
 
 import com.zt.entity.Movie;
-import org.apache.ibatis.annotations.Param;
-
+import org.apache.ibatis.annotations.*;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +29,11 @@ public interface MovieMapper {
     /**
      *根据多个id进行批量查询
      * @param idList
-     * @return
+     * @return List<Movie>
      */
     List<Movie> findById(@Param("idList") List<Integer> idList);
+
+
+
+
 }
