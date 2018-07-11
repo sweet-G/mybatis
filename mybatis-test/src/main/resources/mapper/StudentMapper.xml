@@ -7,11 +7,13 @@
         <id column="id" property="id"/>
         <result column="stu_name" property="stuName"/>
         <result column="email" property="email"/>
+        <result column="school_id" property="schoolId"/>
     </resultMap>
 
     <!-- 一对多-->
     <resultMap id="tagMap" type="com.zt.entity.Student" extends="baseMap">
         <collection property="tagList" ofType="com.zt.entity.Tag">
+            <!-- 关联关系表，tag.id别名tag_id -->
             <id column="tag_id" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
@@ -28,7 +30,8 @@
     <!-- 多对一/一对一 -->
     <resultMap id="schoolMap" type="com.zt.entity.Student" extends="baseMap">
         <association property="school" javaType="com.zt.entity.School">
-            <id column="id" property="id"/>
+            <!-- student中的school_id -->
+            <id column="school_id" property="id"/>
             <result column="school_name" property="schoolName"/>
         </association>
     </resultMap>

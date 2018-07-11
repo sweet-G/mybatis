@@ -27,10 +27,12 @@
         </where>
     </select>
 
-    <!--
-    &lt;!&ndash; 多个模糊查询&ndash;&gt;
+<!--
+
+    &lt;!&ndash;多个模糊查询&ndash;&gt;
     <select id="findByParam" resultType="com.zt.entity.Movie" parameterType="map">
         select * from movie
+        &lt;!&ndash; 前缀/suffixOverrides后缀&ndash;&gt;
         <trim prefix="where" prefixOverrides="and | or">
             <if test="title != null and title != ''">
                 and title like #{title}
@@ -40,6 +42,7 @@
             </if>
         </trim>
     </select>
+
 -->
 
     <!-- 批量查询-->

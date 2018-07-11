@@ -2,11 +2,18 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!-- 别名-->
+
+    <!-- 下划线转换-->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    
+
+    <!--&lt;!&ndash; 别名 &ndash;&gt;
+    <typeAliases>
+        <typeAlias type="com.zt.entity.Student" alias="Student"/>
+    </typeAliases>-->
+
+    <!-- 环境变量 -->
     <environments default="dev">
         <environment id="dev">
             <transactionManager type="JDBC"/>
@@ -19,6 +26,7 @@
         </environment>
     </environments>
 
+    <!-- 映射文件 -->
     <mappers>
         <mapper resource="mapper/StudentMapper.xml"/>
         <mapper resource="mapper/MovieMapper.xml"/>
