@@ -52,6 +52,68 @@
 
 #### Build with an ONGL expression
 
+### Cache
+
+#### level 1 cache (The defalut open) : In the same sqlSession, the same object is queried, only the first time it is retrieved from the database, and the rest is retrieved from the cache as well.
+
+#### levle 2 cache :In the same sqlSessionFactory. 
+
+### Using notes configuration mapper file
+
+#### In the main configuration file 
+
+``` xml
+<mapper class="com.zt.mapper.StudentMapper"/>
+```
+
+#### In the mapper configuration file write notes
+
+``` java
+@Insert("insert into productor (pro_name,pro_num) values (#{proName},#{proNum})")
+@Options(useGeneratedKeys = true, keyProperty = "id")
+int insertProductor(Productor productor);
+
+//update、delete、select一致
+
+/**
+ * 注解形式、一对一/多对一
+ * @param id
+ * @return student对象
+ */
+@Select("select student.id, stu_name, email, school_id from student where student.id = #{id}")
+@Results({
+    @Result(column = "id", property = "id"),
+    @Result(column = "stu_name", property = "stuName"),
+    @Result(column = "email", property = "email"),
+    @Result(column = "school_id", property = "schoolId"),
+    @Result(column = "school_id",property = "school",
+            one = @One(select = "com.zt.mapper.SchoolMapper.findById"))
+})
+Student findSchoolById(Integer id);
+
+/**
+ * 注解形式、一对多
+ * @param id
+ * @return student对象
+ */
+@Select("select id, stu_name, email, school_id from student where id = #{id}")
+@Results({
+    @Result(column = "id", property = "id"),
+    @Result(column = "stu_name", property = "stuName"),
+    @Result(column = "email", property = "email"),
+    @Result(column = "school_id", property = "schoolId"),
+    @Result(column = "id", property = "tagList",
+            many = @Many(select = "com.zt.mapper.TagMapper.findById") )
+})
+Student findTagById(Integer id);
+```
+
+
+
+
+
+
+
 
 
 
