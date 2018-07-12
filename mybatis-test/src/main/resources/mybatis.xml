@@ -28,8 +28,16 @@
 
     <!-- 映射文件 -->
     <mappers>
-        <mapper resource="mapper/StudentMapper.xml"/>
-        <mapper resource="mapper/MovieMapper.xml"/>
+        <!-- 配置mapper-->
+        <!--<mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/MovieMapper.xml"/>-->
+
+        <!-- 注解配置 -->
+        <mapper class="com.zt.mapper.ProductorMapper"/>
+        <mapper class="com.zt.mapper.StudentMapper"/>
+        <mapper class="com.zt.mapper.SchoolMapper"/>
+        <mapper class="com.zt.mapper.TagMapper"/>
+
     </mappers>
 
 </configuration>

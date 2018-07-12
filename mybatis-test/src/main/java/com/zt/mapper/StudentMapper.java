@@ -2,7 +2,7 @@ package com.zt.mapper;
 
 import com.zt.entity.Student;
 import com.zt.entity.Tag;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -66,14 +66,14 @@ public interface StudentMapper {
      * @param id
      * @return student
      */
-    Student findSchoolById(Integer id);
+    //Student findSchoolById(Integer id);
 
     /**
      * 查询学生对应的标签，一对多
      * @param id
      * @return student
      */
-    Student findTagById(Integer id);
+    //Student findTagById(Integer id);
 
     /**
      * 批量插入
@@ -81,4 +81,38 @@ public interface StudentMapper {
      * @return count
      */
     int addBatch(@Param("tagList")List<Tag> tagList);
+
+    /**
+     * 注解形式、一对一/多对一
+     * @param id
+     * @return student对象
+     */
+    @Select("select student.id, stu_name, email, school_id from student where student.id = #{id}")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "stu_name", property = "stuName"),
+            @Result(column = "email", property = "email"),
+            @Result(column = "school_id", property = "schoolId"),
+            @Result(column = "school_id",property = "school",
+                    one = @One(select = "com.zt.mapper.SchoolMapper.findById"))
+    })
+    Student findSchoolById(Integer id);
+
+    /**
+     * 注解形式、一对多
+     * @param id
+     * @return student对象
+     */
+    @Select("select id, stu_name, email, school_id from student where id = #{id}")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "stu_name", property = "stuName"),
+            @Result(column = "email", property = "email"),
+            @Result(column = "school_id", property = "schoolId"),
+            @Result(column = "id", property = "tagList",
+                    many = @Many(select = "com.zt.mapper.TagMapper.findById") )
+    })
+    Student findTagById(Integer id);
+
+
 }

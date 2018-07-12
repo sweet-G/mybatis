@@ -1,5 +1,6 @@
 package com.zt.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *@date 2018/7/9
  */
 
-public class Student {
+public class Student implements Serializable {
 
     private Integer id;
     private String stuName;
