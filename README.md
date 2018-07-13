@@ -108,6 +108,32 @@ Student findSchoolById(Integer id);
 Student findTagById(Integer id);
 ```
 
+## MyBatis-generator
+
+#### website : http://www.mybatis.org/generator/index.html
+
+According to the rules of the configuration file,aotumatic generation of entity classes、mapper file、xml file.
+
+The configuration file name must be generatorConfig.xml.Add jars to maven ,version1.3.5
+
+#### gui  way
+
+webstie : https://github.com/zouzg/mybatis-generator-gui
+
+## page plugin
+
+webstie : https://github.com/pagehelper/Mybatis-PageHelper
+
+Add jars to maven 5.0.0,In the master configuration 
+
+``` xml
+<plugins>
+	<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+</plugins>
+```
+
+
+
 
 
 
