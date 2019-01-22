@@ -3,10 +3,9 @@ package com.zt.test;
 import com.zt.entity.ExcelData;
 import com.zt.entity.ExcelReader;
 import com.zt.entity.School;
-import com.zt.entity.SchoolExample;
 import com.zt.mapper.SchoolMapper;
-import com.zt.util.Common;
-import com.zt.util.ReadExcel;
+import com.zt.poiUtil.Common;
+import com.zt.poiUtil.ReadExcel;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -172,7 +170,7 @@ public class PoiReadTest {
                 continue;
             }
             school = new School();
-            school.setId((clumMap.get(0)));
+            school.setId(Integer.parseInt(clumMap.get(0)));
             school.setSchoolName(clumMap.get(1));
             list.add(school);
         }

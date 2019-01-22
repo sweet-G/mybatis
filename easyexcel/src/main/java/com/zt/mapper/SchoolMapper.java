@@ -29,4 +29,5 @@ public interface SchoolMapper {
     int updateByPrimaryKey(School record);
 
 
+    void batchInsert(List<Object> datas);
 }

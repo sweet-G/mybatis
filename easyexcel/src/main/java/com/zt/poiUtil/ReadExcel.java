@@ -1,4 +1,4 @@
-package com.zt.util;
+package com.zt.poiUtil;
 
 import com.zt.entity.School;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -61,7 +61,7 @@ public class ReadExcel {
                     school = new School();
                     XSSFCell id = xssfRow.getCell(0);
                     XSSFCell name = xssfRow.getCell(1);
-                    school.setId((getValue(id)));
+                    school.setId(Integer.parseInt(getValue(id)));
                     school.setSchoolName(getValue(name));
                     list.add(school);
 
@@ -93,7 +93,7 @@ public class ReadExcel {
                     school = new School();
                     HSSFCell id = hssfRow.getCell(0);
                     HSSFCell name = hssfRow.getCell(1);
-                    school.setId((getValue(id)));
+                    school.setId(Integer.parseInt(getValue(id)));
                     school.setSchoolName(getValue(name));
                     list.add(school);
                 }

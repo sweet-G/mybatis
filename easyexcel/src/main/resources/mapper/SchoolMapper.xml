@@ -169,4 +169,14 @@
     set school_name = #{schoolName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO school (id,schol_name)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},#{item.schoolName})
+    </foreach>
+  </insert>
+
 </mapper>

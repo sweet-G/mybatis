@@ -1,22 +1,24 @@
 package com.zt.entity;
 
-import java.io.Serializable;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.metadata.BaseRowModel;
 
 /**
  * @author 
  */
-public class School implements Serializable {
-    private String id;
-
+public class School extends BaseRowModel {
+    @ExcelProperty(index = 0)
+    private Integer id;
+    @ExcelProperty(index = 1)
     private String schoolName;
 
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -30,14 +32,9 @@ public class School implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", schoolName=").append(schoolName);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "School{" +
+                "id=" + id +
+                ", schoolName='" + schoolName + '\'' +
+                '}';
     }
 }
