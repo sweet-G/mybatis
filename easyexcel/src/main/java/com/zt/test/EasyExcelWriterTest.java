@@ -49,7 +49,7 @@ public class EasyExcelWriterTest {
             List<School> schoolList = schoolMapper.selectByExample(schoolExample);
             for(School school : schoolList){
                 ExcelIndelModel item = new ExcelIndelModel();
-                    item.id = school.getId();
+                    item.id = Integer.valueOf(school.getId());
                     item.schoolName = school.getSchoolName();
                     data.add(item);
             }

@@ -3,7 +3,10 @@ package com.zt.test;
 import com.zt.entity.ExcelData;
 import com.zt.entity.ExcelReader;
 import com.zt.entity.School;
+import com.zt.entity.SchoolExample;
 import com.zt.mapper.SchoolMapper;
+import com.zt.util.Common;
+import com.zt.util.ReadExcel;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,14 +35,13 @@ import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class PoiWriterTest {
+public class PoiReadTest {
 
     @Autowired
     private SchoolMapper schoolMapper;
 
     @Test
-    public void readExcelServlet() {
-
+    public void readExcelServlet() throws IOException {
         //excel文件路径
         String excelPath = "e:/files/word/school.xls";
         try {
@@ -68,19 +71,22 @@ public class PoiWriterTest {
                 //第一行是列名，所以不读
                 int firstRowIndex = sheet.getFirstRowNum() + 1;
                 int lastRowIndex = sheet.getLastRowNum();
+                int rows = sheet.getPhysicalNumberOfRows();  //获取到Excel文件中的所有行数
                 System.out.println("firstRowIndex: " + firstRowIndex);
                 System.out.println("lastRowIndex: " + lastRowIndex);
+                System.out.println("roes: " + rows);
 
                 //遍历行
                 for (int rIndex = firstRowIndex; rIndex <= lastRowIndex; rIndex++) {
+
                     if (rIndex != 3) {
                         System.out.println("rIndex: " + rIndex);
                         Row row = sheet.getRow(rIndex);
                         if (row != null) {
                             int firstCellIndex = row.getFirstCellNum();
                             int lastCellIndex = row.getLastCellNum();
-                            //遍历列
                             String value = "";
+                            //遍历列
                             for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {
                                 Cell cell = row.getCell(cIndex);
                                 if (cell != null) {
@@ -97,13 +103,12 @@ public class PoiWriterTest {
                                             value += "0";
                                             break;
                                     }
-
+                                    System.out.println("cell-->" + cell.toString());
                                 }
                             }
                             String[] val = value.split(",");
-                            System.out.println(val);
+                            System.out.println("val-->" + val);
                         }
-
                     }
                 }
             } else {
@@ -112,12 +117,11 @@ public class PoiWriterTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
     @Test
-    public void test() throws Exception{
+    public void test() throws Exception {
         // 新建一个对象,存错误信息
         StringBuffer err = null;
         ExcelData excelData = null;
@@ -168,11 +172,38 @@ public class PoiWriterTest {
                 continue;
             }
             school = new School();
-            school.setId(Integer.valueOf(clumMap.get(0)));
+            school.setId((clumMap.get(0)));
             school.setSchoolName(clumMap.get(1));
             list.add(school);
         }
         return list;
     }
 
+    @Test
+    //poi读取
+    public void poiTest() throws IOException {
+        String excel2003_2007 = Common.SCHOOL_INFO_XLS_PATH;
+        String excel2010 = Common.SCHOOL_INFO_XLSX_PATH;
+        // read the 2003-2007 excel
+        List<School> list = new ReadExcel().readExcel(excel2003_2007);
+        if (list != null) {
+            for (School school : list) {
+                System.out.println("id. : " + school.getId() + ", name : " + school.getSchoolName() );
+                //在这进行去重复的，再插入数据库
+                schoolMapper.insert(school);
+
+            }
+
+        }
+    }
+
 }
+        /*// read the 2010 excel
+        List<School> list1 = new ReadExcel().readExcel(excel2010);
+        if (list1 != null) {
+            for (School school : list1) {
+                System.out.println("No. : " + school.getNo() + ", name : " + student.getName() + ", age : " + student.getAge() + ", score : " + student.getScore());
+            }
+        }*/
+
+
