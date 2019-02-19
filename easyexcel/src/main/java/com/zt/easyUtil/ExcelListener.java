@@ -2,8 +2,6 @@ package com.zt.easyUtil;
 
 import com.alibaba.excel.read.context.AnalysisContext;
 import com.alibaba.excel.read.event.AnalysisEventListener;
-import com.zt.entity.School;
-import com.zt.entity.SchoolExample;
 import com.zt.mapper.SchoolMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
